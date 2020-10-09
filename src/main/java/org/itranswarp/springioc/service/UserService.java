@@ -1,5 +1,6 @@
 package org.itranswarp.springioc.service;
 
+import org.itranswarp.springioc.aspect.MetricTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -46,6 +47,7 @@ public class UserService {
         return this.users.stream().filter(x->x.getId() == id).findFirst().orElseThrow();
     }
 
+    @MetricTime("register")//以注解方式实现AOP装配
     public User register(String email, String password, String name){
         this.validators.validate(email,password,name);
         users.forEach(x->{

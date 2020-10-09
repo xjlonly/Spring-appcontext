@@ -18,6 +18,7 @@ import java.time.ZoneId;
 @ComponentScan
 @PropertySource("app.properties") //表示读取classpath的app.properties
 @PropertySource("smtp.properties")
+@EnableAspectJAutoProxy
 public class App 
 {
     @Value("${app.zone}")
@@ -38,15 +39,15 @@ public class App
 
         UserService userService = context.getBean(UserService.class);
         User user = userService.register("lili@example.com", "password","lili");
-        System.out.println(user.getName());
+        System.out.println("register:" +  user.getName());
+//
+//        var names = context.getBeanDefinitionNames();
+//        for (var name : names){
+//            System.out.println(name);
+//        }
 
-        var names = context.getBeanDefinitionNames();
-        for (var name : names){
-            System.out.println(name);
-        }
-
-        AppService appService = context.getBean(AppService.class);
-        appService.printLog();
+//        AppService appService = context.getBean(AppService.class);
+//        appService.printLog();
     }
 
     @Bean("Z") //如果一个Bean不在我们的package中 通过在@Configuraion类中 标记为@Bean的方法创建
