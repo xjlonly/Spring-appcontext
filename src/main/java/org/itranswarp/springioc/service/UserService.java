@@ -4,8 +4,10 @@ import org.itranswarp.springioc.aspect.MetricTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,9 @@ public class UserService {
     private HikariDataSource dataSource;
 
     @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
     private Validators validators;
 
 
@@ -28,12 +33,12 @@ public class UserService {
     ));
 
     public User login(String email, String password){
-        String sql = " select * from zj_user where Name=?; ";
+       /* String sql = " select * from zj_user where Name=?; ";
         try {
             dataSource.query(sql, new Object[]{"xjlonly"});
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
+        }*/
         for(User user :users){
             if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)){
                 mailService.sendLoginMail(user);

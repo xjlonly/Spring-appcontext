@@ -8,9 +8,9 @@ import java.sql.*;
 import java.util.logging.Logger;
 @Component
 public  class HikariDataSource implements DataSource {
-    private String jdbcUrl = "jdbc:mysql://cdb-jqb0laoy.cd.tencentcdb.com:10017/test1";
-    private String userName = "lean";
-    private String password = "123456";
+    private String jdbcUrl = "";
+    private String userName = "";
+    private String password = "";
 
     @Override
     public PrintWriter getLogWriter() throws SQLException {

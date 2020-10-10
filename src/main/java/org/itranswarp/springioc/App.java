@@ -14,15 +14,10 @@ import java.time.ZoneId;
  * Hello world!
  *
  */
-@Configuration
-@ComponentScan
-@PropertySource("app.properties") //表示读取classpath的app.properties
-@PropertySource("smtp.properties")
-@EnableAspectJAutoProxy
+
+
 public class App 
 {
-    @Value("${app.zone}")
-    String zoneId;
     @SuppressWarnings("resource")
     public static void main( String[] args ) {
         //创建Spring ioc容器实例 一次性创建所有的Bean
@@ -35,7 +30,7 @@ public class App
 //        MailService mailService = factory.getBean(MailService.class);
 
         //Annotation配置注入
-        ApplicationContext context = new AnnotationConfigApplicationContext(App.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         UserService userService = context.getBean(UserService.class);
         User user = userService.register("lili@example.com", "password","lili");
@@ -50,15 +45,5 @@ public class App
 //        appService.printLog();
     }
 
-    @Bean("Z") //如果一个Bean不在我们的package中 通过在@Configuraion类中 标记为@Bean的方法创建
-    @Primary //指定主注入Bean 注入时没有指定Bean名称 默认使用@Primary的Bean
-    ZoneId createZoneId(){
-        return ZoneId.of(zoneId);
-    }
 
-    @Bean
-    @Qualifier("UTC8") //多个同类型的Bean指定别名 注入时要指定Bean名称
-    ZoneId createZoneIdUTC8(){
-        return ZoneId.of("UTC+08:00");
-    }
 }
