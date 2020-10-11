@@ -1,6 +1,6 @@
 package org.itranswarp.springioc.aspect;
 
-import org.itranswarp.springioc.service.User;
+import org.itranswarp.springioc.entity.User;
 import org.itranswarp.springioc.service.UserService;
 
 /*

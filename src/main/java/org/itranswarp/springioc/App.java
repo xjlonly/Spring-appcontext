@@ -1,14 +1,10 @@
 package org.itranswarp.springioc;
 
-import org.itranswarp.springioc.config.AppService;
-import org.itranswarp.springioc.service.User;
+import org.itranswarp.springioc.entity.User;
 import org.itranswarp.springioc.service.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.*;
-
-import java.time.ZoneId;
 
 /**
  * Hello world!
@@ -34,8 +30,14 @@ public class App
 
         UserService userService = context.getBean(UserService.class);
         User user = userService.register("lili@example.com", "password","lili");
-        System.out.println("register:" +  user.getName());
-//
+        System.out.println("register:" +  user.getName() + ", id:" + user.getId());
+        User user1 = userService.registerbyH("lili134@example.com", "password","lisisi");
+
+        var t = userService.getUserById(15);
+        System.out.println(t.getCreateAt());
+        var b = userService.getUserByIdMyBatis(17);
+        System.out.println(b.getCreateAt());
+
 //        var names = context.getBeanDefinitionNames();
 //        for (var name : names){
 //            System.out.println(name);
@@ -43,6 +45,7 @@ public class App
 
 //        AppService appService = context.getBean(AppService.class);
 //        appService.printLog();
+        ((ConfigurableApplicationContext)context).close();
     }
 
 
