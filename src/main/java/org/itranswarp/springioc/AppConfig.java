@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.hibernate.SessionFactory;
+import org.itranswarp.springioc.myorm.DbTemplate;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,4 +161,10 @@ public class AppConfig {
 //    PlatformTransactionManager createTxManager(@Autowired @Qualifier("hsqldb") DataSource dataSource){
 //        return new DataSourceTransactionManager(dataSource);
 //    }
+
+    //手动实现ORM
+    @Bean
+    DbTemplate createDbTemplate(@Autowired JdbcTemplate jdbcTemplate){
+        return new DbTemplate(jdbcTemplate,"org.itranswarp.springioc.entity");
+    }
 }

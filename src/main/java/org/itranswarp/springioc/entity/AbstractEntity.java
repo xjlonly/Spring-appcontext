@@ -27,7 +27,8 @@ public abstract class AbstractEntity {
         this.createAt = createAt;
     }
 
-    @Transient //标注一个虚拟属性，而不是从数据库里读取值 Hibernate不会从数据库里读取CreatedDateTime自带
+    //标注一个虚拟属性，而不是从数据库里读取值 Hibernate不会从数据库里读取CreatedDateTime自带
+    @Transient
     public ZonedDateTime getCreatedDateTime(){
         return Instant.ofEpochMilli(this.createAt).atZone(ZoneId.systemDefault());
     }

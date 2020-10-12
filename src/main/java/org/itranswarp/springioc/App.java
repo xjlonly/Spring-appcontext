@@ -38,6 +38,10 @@ public class App
         var b = userService.getUserByIdMyBatis(17);
         System.out.println(b.getCreateAt());
 
+        var c = userService.getUserByMyORM(19);
+        System.out.println(c.getCreateAt());
+        User us =  userService.insertUserORM("lili134@example.com", "password","lisisi");
+        System.out.println(us.getId());
 //        var names = context.getBeanDefinitionNames();
 //        for (var name : names){
 //            System.out.println(name);

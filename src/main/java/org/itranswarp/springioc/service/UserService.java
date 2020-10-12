@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import org.itranswarp.springioc.aspect.MetricTime;
 import org.itranswarp.springioc.entity.User;
 import org.itranswarp.springioc.mybatis.UserManager;
+import org.itranswarp.springioc.myorm.DbTemplate;
 import org.itranswarp.springioc.repository.UserDao;
 import org.itranswarp.springioc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class UserService {
@@ -55,6 +59,10 @@ public class UserService {
     //注入Mybatis mapper
     @Autowired
     UserManager userManager;
+
+    @Autowired
+    DbTemplate dbTemplate;
+
 
     private List<User> users = new ArrayList<User>(List.of(
             new User(1,"bob@example.com", "password", "Bob"),
@@ -150,5 +158,24 @@ public class UserService {
             throw new RuntimeException("User not found by id");
         }
         return  user;
+    }
+
+    public  User getUserByMyORM(long id){
+        User user = dbTemplate.get(User.class, id);
+        if(user == null){
+            throw new RuntimeException("User not found by id");
+        }
+        return user;
+    }
+
+    public  User insertUserORM(String email, String password, String name){
+        User user= new User();
+        user.setEmail(email);
+        user.setName(name);
+        user.setPassword(password);
+        user.setCreateAt(System.currentTimeMillis());
+        dbTemplate.insert(user);
+        System.out.println(user.getId());
+        return user;
     }
 }
