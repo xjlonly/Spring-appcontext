@@ -42,6 +42,13 @@ public class App
         System.out.println(c.getCreateAt());
         User us =  userService.insertUserORM("lili134@example.com", "password","lisisi");
         System.out.println(us.getId());
+
+        String name = userService.geNameEmail("lili@example.com");
+        System.out.println(name);
+        var users=  userService.getUsers(1);
+        for (var item : users){
+            System.out.println(item.getId());
+        }
 //        var names = context.getBeanDefinitionNames();
 //        for (var name : names){
 //            System.out.println(name);

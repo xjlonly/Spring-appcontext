@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 * */
 public final class Mapper<T> {
     final Class<T> entityClass;
-    final  String tableName;
+    final String tableName;
 
     //@Id property
     final AccessibleProperty id;

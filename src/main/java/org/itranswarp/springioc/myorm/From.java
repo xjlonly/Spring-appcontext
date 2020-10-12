@@ -1,16 +1,18 @@
 package org.itranswarp.springioc.myorm;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Where<T> extends CriteriaQuery<T> {
-    Where(Criteria<T> criteria, String clause, Object... params) {
+public class From<T> extends CriteriaQuery<T> {
+
+    From(Criteria<T> criteria, Mapper<T> mapper) {
         super(criteria);
-        this.criteria.where = clause;
-        this.criteria.whereParams = new ArrayList<>();
-        for(Object param : params){
-            this.criteria.whereParams.add(param);
-        }
+        this.criteria.mapper = mapper;
+        this.criteria.clazz = mapper.entityClass;
+        this.criteria.table = mapper.tableName;
+    }
+
+    public  Where<T> where(String clause, Object... args){
+        return new Where<>(this.criteria, clause, args);
     }
 
     public OrderBy<T> orderBy(String orderBy){

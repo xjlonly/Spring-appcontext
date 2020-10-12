@@ -149,4 +149,14 @@ public class DbTemplate {
         }
         return  classes;
     }
+
+
+    public Select select(String... selectFields){
+        return  new Select(new Criteria(this), selectFields);
+    }
+
+    public <T> From<T> from(Class<T> clazz){
+        Mapper<T> mapper = getMapper(clazz);
+        return new From<>(new Criteria<>(this),mapper);
+    }
 }

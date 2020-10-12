@@ -178,4 +178,17 @@ public class UserService {
         System.out.println(user.getId());
         return user;
     }
+
+    //链式调用
+    public String geNameEmail(String email){
+        User user = dbTemplate.select("name").from(User.class).where("email=?", email).first();
+        return user.getName();
+    }
+
+    public  List<User> getUsers(int pageIndex){
+        int pageSize =100;
+        return  dbTemplate.from(User.class).orderBy("id").limit((pageIndex -1) * pageSize, pageSize).list();
+    }
+
+
 }
